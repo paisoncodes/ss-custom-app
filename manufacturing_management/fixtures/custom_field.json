@@ -1,0 +1,121 @@
+[
+    {
+        "doctype": "Custom Field",
+        "dt": "Production Plan",
+        "fieldname": "employee",
+        "label": "Employee",
+        "fieldtype": "Link",
+        "options": "Employee",
+        "insert_after": "posting_date",
+        "name": "Production Plan-employee"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Production Plan",
+        "fieldname": "branch",
+        "label": "Branch",
+        "fieldtype": "Link",
+        "options": "Branch",
+        "insert_after": "employee",
+        "name": "Production Plan-branch"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Production Plan",
+        "fieldname": "fetch_material_request",
+        "label": "Get Material Request",
+        "fieldtype": "Button",
+        "insert_after": "get_material_request",
+        "name": "Production Plan-fetch_material_request"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Material Request",
+        "fieldname": "branch",
+        "label": "Branch",
+        "fieldtype": "Link",
+        "options": "Branch",
+        "insert_after": "item_group",
+        "name": "Material Request-branch"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Material Request",
+        "fieldname": "item_group",
+        "label": "Item Group",
+        "fieldtype": "Link",
+        "options": "Item Group",
+        "insert_after": "set_from_warehouse",
+        "reqd": 1,
+        "name": "Material Request-item_group"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Stock Entry",
+        "fieldname": "branch",
+        "label": "Branch",
+        "fieldtype": "Link",
+        "options": "Branch",
+        "insert_after": "posting_time",
+        "reqd": 1,
+        "name": "Stock Entry-branch"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Warehouse",
+        "fieldname": "branch",
+        "label": "Branch",
+        "fieldtype": "Link",
+        "options": "Branch",
+        "insert_after": "warehouse_name",
+        "reqd": 1,
+        "name": "Warehouse-branch"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Work Order",
+        "fieldname": "employee",
+        "label": "Employee",
+        "fieldtype": "Link",
+        "options": "Employee",
+        "fetch_from": "production_plan.employee",
+        "insert_after": "sales_order",
+        "reqd": 1,
+        "name": "Work Order-employee"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Work Order",
+        "fieldname": "branch",
+        "label": "Branch",
+        "fieldtype": "Link",
+        "options": "Branch",
+        "insert_after": "employee",
+        "reqd": 1,
+        "in_standard_filter": 1,
+        "fetch_from": "production_plan.branch",
+        "name": "Work Order-branch"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Journal Entry",
+        "fieldname": "cost_center",
+        "label": "Cost Center",
+        "fieldtype": "Link",
+        "options": "Cost Center",
+        "insert_after": "naming_series",
+        "reqd": 1,
+        "name": "Work Order-cost_center"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Journal Entry",
+        "fieldname": "business_segment",
+        "label": "Business Segment",
+        "fieldtype": "Link",
+        "options": "Business Segment",
+        "insert_after": "cost_center",
+        "reqd": 1,
+        "name": "Work Order-business_segment"
+    }
+]

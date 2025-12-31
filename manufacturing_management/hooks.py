@@ -43,7 +43,11 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Stock Entry": "public/js/stock_entry.js",
+    "Production Plan": "public/js/production_plan.js",
+    "Material Request": "public/js/material_request.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -137,13 +141,18 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Work Order": {
+        "before_insert": "manufacturing_management.utils.server_scripts.work_order_before_insert",
+        "on_submit": "manufacturing_management.utils.server_scripts.create_manufacture_document_from_work_order",
+    },
+    "Warehouse": {
+        "before_save": "manufacturing_management.utils.server_scripts.warehouse_before_save",
+    },
+    "Stock Entry": {
+        "on_submit": "manufacturing_management.utils.server_scripts.stock_entry_on_submit",
+    },
+}
 
 # Scheduled Tasks
 # ---------------
@@ -241,4 +250,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
