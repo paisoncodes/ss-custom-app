@@ -37,8 +37,7 @@
         "options": "Employee",
         "insert_after": "item_group",
         "reqd": 1,
-        "fetch_from": "employee.branch",
-        "name": "Material Request-item_group"
+        "name": "Material Request-employee"
     },
     {
         "doctype": "Custom Field",
@@ -48,6 +47,7 @@
         "fieldtype": "Link",
         "options": "Branch",
         "insert_after": "employee",
+        "fetch_from": "employee.branch",
         "name": "Material Request-branch"
     },
     {
