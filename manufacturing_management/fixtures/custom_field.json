@@ -182,7 +182,7 @@
         "options": "Cost Center",
         "insert_after": "naming_series",
         "reqd": 1,
-        "name": "Work Order-cost_center"
+        "name": "Journal Entry-cost_center"
     },
     {
         "doctype": "Custom Field",
@@ -193,6 +193,6 @@
         "options": "Business Segment",
         "insert_after": "cost_center",
         "reqd": 1,
-        "name": "Work Order-business_segment"
+        "name": "Journal Entry-business_segment"
     }
 ]

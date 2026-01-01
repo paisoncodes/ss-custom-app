@@ -6,7 +6,7 @@ frappe.ui.form.on("Production Plan", {
 			() => {
 				frappe.call({
 					method: "manufacturing_management.manufacturing_management.apis.material_transfer.create_material_transfer_from_production_plan",
-					args: { name: frm.doc.name },
+					args: { production_plan_id: frm.doc.name },
 					freeze: true,
 					freeze_message: __("Creating Material Transfer..."),
 					callback: function (r) {
@@ -27,7 +27,7 @@ frappe.ui.form.on("Production Plan", {
 		frm.add_custom_button("Submit Work Orders", () => {
 			frappe.call({
 				method: "manufacturing_management.manufacturing_management.apis.work_order.submit_work_orders_for_production_plan",
-				args: { name: frm.doc.name },
+				args: { production_plan_id: frm.doc.name },
 				freeze: true,
 				freeze_message: __("Submitting Work Orders..."),
 				callback: function (r) {
