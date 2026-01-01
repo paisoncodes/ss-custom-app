@@ -151,7 +151,7 @@ def expense_claim_validate(doc, _):
 
 
 def journal_entry_validate(doc, _):
-    for expense in doc.expenses:
+    for expense in doc.accounts:
         expense.cost_center = doc.cost_center
         expense.business_segment = doc.business_segment
 
