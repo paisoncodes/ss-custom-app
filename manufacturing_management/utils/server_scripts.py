@@ -183,7 +183,7 @@ def stock_entry_on_submit(doc, _):
                     journal_doc.append(
                         "accounts",
                         {
-                            "account": source_warehouse.custom_stock_recovery_ledger,
+                            "account": target_warehouse.custom_stock_recovery_ledger,
                             "debit_in_account_currency": doc.total_outgoing_value,
                         },
                     )
@@ -191,7 +191,7 @@ def stock_entry_on_submit(doc, _):
                     journal_doc.append(
                         "accounts",
                         {
-                            "account": target_warehouse.custom_stock_recovery_ledger,
+                            "account": source_warehouse.custom_stock_recovery_ledger,
                             "credit_in_account_currency": doc.total_outgoing_value,
                         },
                     )
