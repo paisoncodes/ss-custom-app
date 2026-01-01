@@ -151,6 +151,22 @@ doc_events = {
     },
     "Stock Entry": {
         "on_submit": "manufacturing_management.utils.server_scripts.stock_entry_on_submit",
+        "validate": "manufacturing_management.utils.server_scripts.stock_entry_validate",
+    },
+    "Purchase Order": {
+        "validate": "manufacturing_management.utils.server_scripts.purchase_order_validate",
+    },
+    "Purchase Receipt": {
+        "validate": "manufacturing_management.utils.server_scripts.purchase_receipt_validate",
+    },
+    "Purchase Invoice": {
+        "validate": "manufacturing_management.utils.server_scripts.purchase_invoice_validate",
+    },
+    "Expense Claim": {
+        "validate": "manufacturing_management.utils.server_scripts.expense_claim_validate",
+    },
+    "Journal Entry": {
+        "validate": "manufacturing_management.utils.server_scripts.journal_entry_validate",
     },
 }
 
