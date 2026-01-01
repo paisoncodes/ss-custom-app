@@ -1,6 +1,6 @@
 import frappe
 
-
+@frappe.whitelist()
 def submit_work_orders_for_production_plan(production_plan_id):
     work_orders = frappe.get_all(
         "Work Order",

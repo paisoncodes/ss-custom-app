@@ -10,7 +10,7 @@ MATERIAL_TRANSFER_WAREHOUSE_SQL_QUERY = """
     LIMIT 1
 """
 
-
+@frappe.whitelist()
 def create_material_transfer_from_production_plan(production_plan_id):
     production_plan = frappe.get_doc("Production Plan", production_plan_id)
     branch = production_plan.branch
