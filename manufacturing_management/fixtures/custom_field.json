@@ -111,6 +111,8 @@
         "fieldtype": "Link",
         "options": "Business Segment",
         "insert_after": "cost_center",
+        "reqd": 1,
+        "hidden": 0,
         "name": "Stock Entry-business_segment"
     },
     {
