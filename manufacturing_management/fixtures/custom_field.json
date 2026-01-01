@@ -105,27 +105,6 @@
     },
     {
         "doctype": "Custom Field",
-        "dt": "Stock Entry",
-        "fieldname": "business_segment",
-        "label": "Business Segment",
-        "fieldtype": "Link",
-        "options": "Business Segment",
-        "insert_after": "cost_center",
-        "reqd": 1,
-        "name": "Stock Entry-business_segment"
-    },
-    {
-        "doctype": "Custom Field",
-        "dt": "Stock Entry Detail",
-        "fieldname": "cost_center",
-        "label": "Cost Center",
-        "fieldtype": "Link",
-        "options": "Cost Center",
-        "insert_after": "branch",
-        "name": "Stock Entry Detail-cost_center"
-    },
-    {
-        "doctype": "Custom Field",
         "dt": "Stock Entry Detail",
         "fieldname": "business_segment",
         "label": "Business Segment",
