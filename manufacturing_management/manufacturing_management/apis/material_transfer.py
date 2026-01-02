@@ -6,7 +6,6 @@ MATERIAL_TRANSFER_WAREHOUSE_SQL_QUERY = """
     FROM `tabWarehouse`
     WHERE branch = %s
     AND LOWER(name) LIKE %s
-    AND name != %s
     LIMIT 1
 """
 
@@ -17,14 +16,14 @@ def create_material_transfer_from_production_plan(production_plan_id):
     today = datetime.now()
     source_warehouse = frappe.db.sql(
         MATERIAL_TRANSFER_WAREHOUSE_SQL_QUERY,
-        (branch, "%outlet%", production_plan.name),
+        (branch, "%outlet%"),
     )
     if not source_warehouse:
         frappe.throw("Branch on Production Plan not is linked to any Outlet")
 
     target_warehouse = frappe.db.sql(
         MATERIAL_TRANSFER_WAREHOUSE_SQL_QUERY,
-        (branch, "%production%", production_plan.name),
+        (branch, "%production%"),
     )
     if not target_warehouse:
         frappe.throw(
