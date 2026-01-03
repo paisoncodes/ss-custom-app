@@ -144,7 +144,6 @@ doctype_js = {
 doc_events = {
     "Work Order": {
         "before_insert": "manufacturing_management.utils.server_scripts.work_order_before_insert",
-        "on_submit": "manufacturing_management.utils.server_scripts.create_manufacture_document_from_work_order",
     },
     "Warehouse": {
         "before_save": "manufacturing_management.utils.server_scripts.warehouse_before_save",

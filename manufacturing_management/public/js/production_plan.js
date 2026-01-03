@@ -1,29 +1,6 @@
 frappe.ui.form.on("Production Plan", {
 	refresh(frm) {
 		frm.toggle_display("get_material_request", false);
-		frm.add_custom_button(
-			"Material Transfer",
-			() => {
-				frappe.call({
-					method: "manufacturing_management.manufacturing_management.apis.material_transfer.create_material_transfer_from_production_plan",
-					args: { production_plan_id: frm.doc.name },
-					freeze: true,
-					freeze_message: __("Creating Material Transfer..."),
-					callback: function (r) {
-						if (r.message) {
-							frappe.show_alert(
-								{
-									message: __(r.message),
-									indicator: "green",
-								},
-								5
-							);
-						}
-					},
-				});
-			},
-			__("Create")
-		);
 		frm.add_custom_button("Submit Work Orders", () => {
 			frappe.call({
 				method: "manufacturing_management.manufacturing_management.apis.work_order.submit_work_orders_for_production_plan",

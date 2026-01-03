@@ -9,7 +9,7 @@ def work_order_before_insert(doc, _):
         fields=["name"],
         filters=[
             ["branch", "=", doc.branch],
-            ["name", "like", "%production%"],
+            ["name", "like", "%outlet%"],
         ],
         limit=1,
     )
@@ -24,7 +24,7 @@ def work_order_before_insert(doc, _):
         limit=1,
     )
     if not found_source_warehouse:
-        frappe.throw("Branch on Work Order not is linked to any Production Warehouse")
+        frappe.throw("Branch on Work Order not is linked to any Outlet")
     if not found_target_warehouse:
         frappe.throw("Branch on Work Order not is linked to any Restaurant")
 
