@@ -4,25 +4,46 @@ from datetime import datetime
 
 
 def work_order_before_insert(doc, _):
-    found_source_warehouse = frappe.get_all(
-        "Warehouse",
-        fields=["name"],
-        filters=[
-            ["branch", "=", doc.branch],
-            ["name", "like", "%outlet%"],
-        ],
-        limit=1,
-    )
+    if "cake" in doc.branch.lower() or "bread" in doc.branch.lower():
+        found_source_warehouse = frappe.get_all(
+            "Warehouse",
+            fields=["name"],
+            filters=[
+                ["branch", "=", doc.branch],
+                ["name", "like", "%factory%"],
+            ],
+            limit=1,
+        )
 
-    found_target_warehouse = frappe.get_all(
-        "Warehouse",
-        fields=["name"],
-        filters=[
-            ["branch", "=", doc.branch],
-            ["name", "like", "%restaurant%"],
-        ],
-        limit=1,
-    )
+        found_target_warehouse = frappe.get_all(
+            "Warehouse",
+            fields=["name"],
+            filters=[
+                ["branch", "=", doc.branch],
+                ["name", "like", "%store%"],
+            ],
+            limit=1,
+        )
+    else:
+        found_source_warehouse = frappe.get_all(
+            "Warehouse",
+            fields=["name"],
+            filters=[
+                ["branch", "=", doc.branch],
+                ["name", "like", "%outlet%"],
+            ],
+            limit=1,
+        )
+
+        found_target_warehouse = frappe.get_all(
+            "Warehouse",
+            fields=["name"],
+            filters=[
+                ["branch", "=", doc.branch],
+                ["name", "like", "%restaurant%"],
+            ],
+            limit=1,
+        )
     if not found_source_warehouse:
         frappe.throw("Branch on Work Order not is linked to any Outlet")
     if not found_target_warehouse:
@@ -156,6 +177,25 @@ def journal_entry_validate(doc, _):
         expense.business_segment = doc.business_segment
 
 
+def stock_entry_on_cancel(doc, _):
+    try:
+        linked_journal_entries = frappe.get_all(
+            "Journal Entry",
+            filters={"stock_entry": doc.name},
+            fields=["name"],
+        )
+        for je in linked_journal_entries:
+            je_doc = frappe.get_doc("Journal Entry", je.name)
+            je_doc.cancel()
+    except Exception:
+        frappe.log_error(
+            frappe.get_traceback(),
+            "Stock Entry on_cancel Error",
+            reference_doctype=doc.doctype,
+            reference_name=doc.name,
+        )
+
+
 def stock_entry_on_submit(doc, _):
     try:
         if (
@@ -177,6 +217,7 @@ def stock_entry_on_submit(doc, _):
             journal_doc.cost_center = doc.cost_center
             journal_doc.business_segment = doc.business_segment
             journal_doc.remark = f"Stock Transfer from {source_warehouse.warehouse_name} to {target_warehouse.warehouse_name} via Stock Entry {doc.name}"
+            journal_doc.stock_entry = doc.name
 
             for i in range(2):
                 if i == 0:

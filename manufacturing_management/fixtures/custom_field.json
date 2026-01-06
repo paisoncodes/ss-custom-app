@@ -196,5 +196,16 @@
         "insert_after": "cost_center",
         "reqd": 1,
         "name": "Journal Entry-business_segment"
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Journal Entry",
+        "fieldname": "stock_entry",
+        "label": "Stock Entry",
+        "fieldtype": "Link",
+        "options": "Stock Entry",
+        "insert_after": "business_segment",
+        "read_only": 1,
+        "name": "Journal Entry-stock_entry"
     }
 ]
