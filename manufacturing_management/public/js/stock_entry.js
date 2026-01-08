@@ -15,5 +15,12 @@ frappe.ui.form.on("Stock Entry", {
 				},
 			});
 		}
+	},
+	validate(frm) {
+		frm.doc.items.forEach(function (item) {
+			if (["Material Transfer", "Manufacture"].includes(frm.doc.stock_entry_type)) {
+				item.difference_account = "522116 - Stock Adjustment - SSC";
+			}
+		});
 	}
 });
