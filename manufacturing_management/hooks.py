@@ -152,6 +152,7 @@ doc_events = {
         "on_submit": "manufacturing_management.utils.server_scripts.stock_entry_on_submit",
         "validate": "manufacturing_management.utils.server_scripts.stock_entry_validate",
         "on_cancel": "manufacturing_management.utils.server_scripts.stock_entry_on_cancel",
+        "on_update": "manufacturing_management.utils.server_scripts.stock_entry_on_update",
     },
     "Purchase Order": {
         "validate": "manufacturing_management.utils.server_scripts.purchase_order_validate",

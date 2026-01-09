@@ -149,6 +149,15 @@ def stock_entry_validate(doc, _):
             item.difference_account = "522116 - Stock Adjustment - SSC"
 
 
+def stock_entry_on_update(doc, _):
+    for item in doc.items:
+        if (
+            doc.stock_entry_type in ["Material Transfer", "Manufacture"]
+            and item.difference_account != "522116 - Stock Adjustment - SSC"
+        ):
+            item.difference_account = "522116 - Stock Adjustment - SSC"
+
+
 def purchase_order_validate(doc, _):
     for item in doc.items:
         item.cost_center = doc.cost_center
