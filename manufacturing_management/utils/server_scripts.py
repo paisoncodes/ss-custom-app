@@ -10,6 +10,15 @@ def sales_invoice_before_insert(doc, _):
             doc.set_warehouse = pos_profile.warehouse
 
 
+def sales_invoice_on_update(doc, _):
+    if doc.set_warehouse and doc.packed_items:
+        for item in doc.packed_items:
+            if item.warehouse != doc.set_warehouse:
+                frappe.db.set_value(
+                    "Packed Item", item.name, "warehouse", doc.set_warehouse
+                )
+
+
 def work_order_before_insert(doc, _):
     if "cake" in doc.branch.lower() or "bread" in doc.branch.lower():
         found_source_warehouse = frappe.get_all(

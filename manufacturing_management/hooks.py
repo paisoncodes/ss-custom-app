@@ -147,6 +147,7 @@ doc_events = {
     },
     "Sales Invoice": {
         "before_insert": "manufacturing_management.utils.server_scripts.sales_invoice_before_insert",
+        "on_update": "manufacturing_management.utils.server_scripts.sales_invoice_on_update",
     },
     "Warehouse": {
         "before_save": "manufacturing_management.utils.server_scripts.warehouse_before_save",
