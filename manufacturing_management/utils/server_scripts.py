@@ -3,6 +3,13 @@ import frappe
 from datetime import datetime
 
 
+def sales_invoice_before_insert(doc, _):
+    if doc.pos_profile and doc.update_stock:
+        pos_profile = frappe.get_doc("POS Profile", doc.pos_profile)
+        if pos_profile.warehouse:
+            doc.set_warehouse = pos_profile.warehouse
+
+
 def work_order_before_insert(doc, _):
     if "cake" in doc.branch.lower() or "bread" in doc.branch.lower():
         found_source_warehouse = frappe.get_all(
@@ -130,6 +137,7 @@ def create_manufacture_document_from_work_order(doc, _):
 
 SOURCE_WAREHOUSES = [
     "Bread Factory - SSC",
+    "Bread Store - SSC",
     "Bread Store - SSC",
     "Cake Factory - SSC",
     "Cake Store - SSC",

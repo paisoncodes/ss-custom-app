@@ -145,6 +145,9 @@ doc_events = {
     "Work Order": {
         "before_insert": "manufacturing_management.utils.server_scripts.work_order_before_insert",
     },
+    "Sales Invoice": {
+        "before_insert": "manufacturing_management.utils.server_scripts.sales_invoice_before_insert",
+    },
     "Warehouse": {
         "before_save": "manufacturing_management.utils.server_scripts.warehouse_before_save",
     },
