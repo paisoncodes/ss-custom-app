@@ -166,6 +166,11 @@ def stock_entry_validate(doc, _):
             item.difference_account = "522116 - Stock Adjustment - SSC"
 
 
+def override_difference_account(doc, method):
+    if doc.stock_entry_type == "Manufacture":
+        for item in doc.items:
+            item.difference_account = "522116 - Stock Adjustment - SSC"
+
 def stock_entry_on_update(doc, _):
     for item in doc.items:
         if (
