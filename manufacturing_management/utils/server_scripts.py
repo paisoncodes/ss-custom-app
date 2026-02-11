@@ -204,10 +204,17 @@ def expense_claim_validate(doc, _):
         expense.business_segment = doc.business_segment
 
 
+# def journal_entry_validate(doc, _):
+#     for expense in doc.accounts:
+#         expense.cost_center = doc.cost_center
+#         expense.business_segment = doc.business_segment
+
 def journal_entry_validate(doc, _):
     for expense in doc.accounts:
-        expense.cost_center = doc.cost_center
-        expense.business_segment = doc.business_segment
+        if not expense.cost_center:
+            expense.cost_center = doc.cost_center
+        if not expense.business_segment:
+            expense.business_segment = doc.business_segment
 
 
 def stock_entry_on_cancel(doc, _):
