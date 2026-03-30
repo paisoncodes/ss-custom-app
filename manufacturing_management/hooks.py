@@ -176,6 +176,9 @@ doc_events = {
     "Journal Entry": {
         "validate": "manufacturing_management.utils.server_scripts.journal_entry_validate",
     },
+    "Leave Application": {
+        "on_update": "manufacturing_management.utils.server_scripts.leave_application_on_update",
+    },
 }
 
 # Scheduled Tasks

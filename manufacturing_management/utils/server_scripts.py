@@ -217,6 +217,105 @@ def journal_entry_validate(doc, _):
             expense.business_segment = doc.business_segment
 
 
+# Leave Allowance Automation
+LEAVE_POLICY_ALLOWANCE_PERCENT = {
+    "HR-LPOL-2026-00001": 70,
+    "HR-LPOL-2026-00002": 60,
+    "HR-LPOL-2026-00003": 50,
+}
+
+
+def leave_application_on_update(doc, _):
+    if doc.status != "Approved":
+        return
+
+    employee = doc.employee
+    leave_from = doc.from_date
+
+    # Get the employee's leave policy from their active Leave Policy Assignment
+    leave_policy_assignment = frappe.get_all(
+        "Leave Policy Assignment",
+        filters={
+            "employee": employee,
+            "docstatus": 1,
+            "effective_from": ["<=", leave_from],
+            "effective_to": [">=", leave_from],
+        },
+        fields=["leave_policy", "effective_from", "effective_to"],
+        order_by="effective_from desc",
+        limit=1,
+    )
+
+    if not leave_policy_assignment:
+        return
+
+    assignment = leave_policy_assignment[0]
+    leave_policy = assignment.leave_policy
+    period_from = assignment.effective_from
+    period_to = assignment.effective_to
+
+    if leave_policy not in LEAVE_POLICY_ALLOWANCE_PERCENT:
+        return
+
+    # Check if leave allowance Additional Salary already exists for this employee
+    # within the same leave period
+    existing = frappe.get_all(
+        "Additional Salary",
+        filters={
+            "employee": employee,
+            "salary_component": "Leave Allowance",
+            "payroll_date": ["between", [period_from, period_to]],
+            "docstatus": ["!=", 2],
+        },
+        limit=1,
+    )
+
+    if existing:
+        return
+
+    # Get employee's monthly gross from Salary Structure Assignment
+    salary_assignment = frappe.get_all(
+        "Salary Structure Assignment",
+        filters={
+            "employee": employee,
+            "docstatus": 1,
+            "from_date": ["<=", leave_from],
+        },
+        fields=["base"],
+        order_by="from_date desc",
+        limit=1,
+    )
+
+    if not salary_assignment:
+        frappe.throw(
+            f"No active Salary Structure Assignment found for employee {employee}. "
+            "Cannot calculate leave allowance."
+        )
+
+    monthly_gross = salary_assignment[0].base
+    percent = LEAVE_POLICY_ALLOWANCE_PERCENT[leave_policy]
+    allowance_amount = monthly_gross * percent / 100
+
+    additional_salary = frappe.new_doc("Additional Salary")
+    additional_salary.employee = employee
+    additional_salary.salary_component = "Leave Allowance"
+    additional_salary.amount = allowance_amount
+    additional_salary.payroll_date = leave_from
+    additional_salary.company = doc.company
+    additional_salary.overwrite_salary_structure_amount = 0
+    additional_salary.ref_doctype = "Leave Application"
+    additional_salary.ref_docname = doc.name
+    additional_salary.insert(ignore_permissions=True)
+    additional_salary.submit()
+
+    frappe.msgprint(
+        f"Leave Allowance of {allowance_amount:,.2f} ({percent}% of monthly gross) "
+        f"has been generated for {doc.employee_name}.",
+        title="Leave Allowance Created",
+        indicator="green",
+    )
+
+
 def stock_entry_on_cancel(doc, _):
     try:
         linked_journal_entries = frappe.get_all(
